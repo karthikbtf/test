@@ -13,7 +13,7 @@
 }, {
   "sf_type" : "Dashboard",
   "sf_dashboard" : "testimportemail",
-  "sf_discoverySelectors" : "_exists_:sf_metric",
+  "sf_discoverySelectors" : ["_exists_:sf_metric"],
   "marshallId" : 3,
   "sf_uiModel" : {
     "widgets" : [ {
