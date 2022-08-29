@@ -36,3 +36,5 @@ jobs:
           git commit -m "${{ github.event.inputs.branch }}"
           git push -u origin `git branch --show-current`
           gh pr create --fill
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
