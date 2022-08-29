@@ -10,19 +10,23 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  automate-all-the-things:
-    - name: create branch
-      run: mkbranch `echo ${{ github.event.inputs.name }} | sed "s/ /-/g"`
+ automate:
+    runs-on: ubuntu-latest
 
-    - name: download design tokens
-      run: |
-        echo yarn build-dictionary
-        echo 'hello world' > design.txt
+    steps:
+      - uses: actions/checkout@v2
 
-    - name: commit changes
-      run: |
-        git add -A
-        git commit -m "${{ github.event.inputs.name }}"
-        git push
-        gh pr create --fill
+      - name: create branch
+        run: mkbranch `echo ${{ github.event.inputs.name }} | sed "s/ /-/g"`
 
+      - name: download design tokens
+        run: |
+          echo yarn build-dictionary
+          echo 'hello world' > design.txt
+
+      - name: commit changes
+        run: |
+          git add -A
+          git commit -m "${{ github.event.inputs.name }}"
+          git push
+          gh pr create --fill
