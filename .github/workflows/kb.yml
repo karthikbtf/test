@@ -20,7 +20,9 @@ jobs:
         run: echo "BRANCH_NAME=${{ github.event.inputs.name }}" >> $GITHUB_ENV
 
       - name: debug
-        run: echo $BRANCH_NAME
+        run: |
+          echo $BRANCH_NAME
+          echo ${{ github.event.inputs.name }}
 
       - name: create branch
         run: git checkout -b `echo ${BRANCH_NAME} | sed "s/ /-/g"`
