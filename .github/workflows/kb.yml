@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: create branch
-        run: mkbranch `echo ${{ github.event.inputs.name }} | sed "s/ /-/g"`
+        run: git checkout -b `echo ${{ github.event.inputs.name }} | sed "s/ /-/g"`
 
       - name: download design tokens
         run: |
