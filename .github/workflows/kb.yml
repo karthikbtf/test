@@ -34,5 +34,5 @@ jobs:
           git config --global user.name ${{ github.event.inputs.email }}
           git add -A
           git commit -m "${{ github.event.inputs.branch }}"
-          git push
+          git push -u origin `git branch --show-current`
           gh pr create --fill
