@@ -7,6 +7,10 @@ on:
         description: 'Describe changes in very few words'
         default: ''
         required: true
+      email:
+        description: 'Your terraformation email'
+        default: ''
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,16 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: set env
-        run: echo "BRANCH_NAME=${{ github.event.inputs.branch }}" >> $GITHUB_ENV
-
-      - name: debug
-        run: |
-          echo $BRANCH_NAME
-          echo ${{ github.event.inputs.branch }}
-
       - name: create branch
-        run: git checkout -b `echo ${BRANCH_NAME} | sed "s/ /-/g"`
+        run: git checkout -b `echo ${{ github.event.inputs.branch }} | sed "s/ /-/g"`
 
       - name: download design tokens
         run: |
@@ -34,6 +30,8 @@ jobs:
 
       - name: commit changes
         run: |
+          git config --global user.email ${{ github.event.inputs.email }}
+          git config --global user.name ${{ github.event.inputs.email }}
           git add -A
           git commit -m "${{ github.event.inputs.name }}"
           git push
