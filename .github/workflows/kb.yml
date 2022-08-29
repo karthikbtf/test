@@ -19,8 +19,11 @@ jobs:
       - name: set env
         run: echo "BRANCH_NAME=${{ github.event.inputs.name }}" >> $GITHUB_ENV
 
+      - name: debug
+        run: echo $BRANCH_NAME
+
       - name: create branch
-        run: git checkout -b `echo ${env.BRANCH_NAME} | sed "s/ /-/g"`
+        run: git checkout -b `echo ${BRANCH_NAME} | sed "s/ /-/g"`
 
       - name: download design tokens
         run: |
