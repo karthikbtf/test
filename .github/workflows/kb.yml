@@ -1,4 +1,4 @@
-name: Design changes workflow
+name: Design changes workfloww
 
 on:
   workflow_dispatch:
