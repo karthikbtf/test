@@ -47,10 +47,11 @@ jobs:
           git config --global user.name ${{ github.actor }}
 
       - name: Create commit message file
-        run: |
-          echo "${{ github.event.inputs.jira }}  ${{ github.event.inputs.description }}" > /tmp/commit-message
-          echo "" >> /tmp/commit-message
-          echo "${{ github.event.inputs.description }}" >> /tmp/commit-message
+        run: node .github/workflows/commit-message.js
+        env:
+          JIRA: ${{ github.event.inputs.jira }}
+          DESCRIPTION: ${{ github.event.inputs.description }}
+          EMAIL: ${{ github.event.inputs.email }}
 
       - name: Commit changes
         run: |
