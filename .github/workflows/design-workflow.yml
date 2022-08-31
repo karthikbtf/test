@@ -29,15 +29,8 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Sanitize user input
-        run: node .github/workflows/sanitize.js >> $GITHUB_ENV
-        env:
-          DESCRIPTION: ${{ github.event.inputs.description }}
-          JIRA: ${{ github.event.inputs.jira }}
-          EMAIL: ${{ github.event.inputs.email }}
-
       - name: Create branch
-        run: git checkout -b $(echo design-workflow-${{ github.actor }}-${{ env.JIRA }}-$(date +%y-%m-%d-%s) | tr ' ' -)
+        run: git checkout -b $(echo design-workflow-${{ github.actor }}-${{ github.event.inputs.jira }}-$(date +%y-%m-%d-%s) | tr ' ' -)
 
       - name: Install Dependencies
         run: yarn install --network-timeout 100000
@@ -50,18 +43,24 @@ jobs:
 
       - name: Config user
         run: |
-          git config --global user.email ${{ env.EMAIL }}
+          git config --global user.email ${{ github.event.inputs.email }}
           git config --global user.name ${{ github.actor }}
+
+      - name: Create commit message file
+        run: |
+          echo "${{ github.event.inputs.jira }}  ${{ github.event.inputs.description }}" > /tmp/commit-message
+          echo "" >> /tmp/commit-message
+          echo "${{ github.event.inputs.description }}" >> /tmp/commit-message
 
       - name: Commit changes
         run: |
           git add -A
-          git commit -m "${{ env.DESCRIPTION }}"
+          git commit -F /tmp/commit-message
 
       - name: Push changes
         run: git push -u origin `git branch --show-current`
 
       - name: Create PR
-        run: gh pr create --title "${{ env.JIRA }} - ${{ env.DESCRIPTION }}" --body "${{ env.DESCRIPTION }}"
+        run: gh pr create --fill
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
