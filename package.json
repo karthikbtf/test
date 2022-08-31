@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@jsdevtools/version-bump-prompt": "^6.1.0"
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
+    "fs": "^0.0.1-security"
   }
 }
