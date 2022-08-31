@@ -51,7 +51,6 @@ jobs:
         env:
           JIRA: ${{ github.event.inputs.jira }}
           DESCRIPTION: ${{ github.event.inputs.description }}
-          EMAIL: ${{ github.event.inputs.email }}
 
       - name: Commit changes
         run: |
