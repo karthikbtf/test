@@ -31,9 +31,9 @@ jobs:
 
       - name: Sanitize user input
         run: |
-          echo JIRA=$(${{ github.event.inputs.jira }} | tr '"' '\\\"' | tr '$' '\$') >> $GITHUB_ENV 
+          echo JIRA=$(echo ${{ github.event.inputs.jira }} | tr '"' '\\\"' | tr '$' '\$') >> $GITHUB_ENV 
           echo DESCRIPTION=$(${{ github.event.inputs.description }} | tr '"' '\\\"' | tr '$' '\$') >> $GITHUB_ENV 
-          echo EMAIL=$(${{ github.event.inputs.email }} | tr '"' '\\\"' | tr '$' '\$') >> $GITHUB_ENV 
+          echo EMAIL=$(echo ${{ github.event.inputs.email }} | tr '"' '\\\"' | tr '$' '\$') >> $GITHUB_ENV 
 
       - name: Create branch
         run: git checkout -b $(echo design-workflow-${{ github.actor }}-${{ env.JIRA }}-$(date +%y-%m-%d-%s) | tr ' ' -)
