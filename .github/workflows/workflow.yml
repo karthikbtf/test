@@ -4,20 +4,12 @@
 name: Deployment
 
 on:
-  push:
-    branches:
-      - main
-      - qa
-    tags:
-      # Semver (these are glob-like patterns, not regexes; the "." has no special meaning)
-      - v[0-9].[0-9]+.[0-9]+
-      # Date-based
-      - v2[0-9]+.[0-9]+
-  pull_request:
-
-permissions:
-  id-token: write
-  contents: read
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'What are we updating (eg. update button destructive color)?'
+        default: ''
+        required: true
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
